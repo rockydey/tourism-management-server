@@ -56,6 +56,32 @@ async function run() {
       res.json(result);
     });
 
+    app.patch("/all-spots/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateSpot = req.body;
+      const spot = {
+        $set: {
+          tourists_spot_name: updateSpot.tourists_spot_name,
+          country_Name: updateSpot.country_Name,
+          location: updateSpot.location,
+          short_description: updateSpot.short_description,
+          average_cost: updateSpot.average_cost,
+          seasonality: updateSpot.seasonality,
+          travel_time: updateSpot.travel_time,
+          total_visitors_per_year: updateSpot.total_visitors_per_year,
+          image: updateSpot.image,
+        },
+      };
+      const result = await touristSpotCollection.updateOne(
+        query,
+        spot,
+        options
+      );
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
