@@ -25,6 +25,9 @@ async function run() {
     await client.connect();
 
     const touristSpotCollection = client.db("touristSpot").collection("spots");
+    const countriesCollection = client
+      .db("countriesDB")
+      .collection("countries");
 
     app.get("/all-spots", async (req, res) => {
       const result = await touristSpotCollection.find().toArray();
@@ -33,6 +36,11 @@ async function run() {
 
     app.get("/my-list", async (req, res) => {
       const result = await touristSpotCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/countries", async (req, res) => {
+      const result = await countriesCollection.find().toArray();
       res.send(result);
     });
 
