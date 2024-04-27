@@ -39,6 +39,11 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/country-list", async (req, res) => {
+      const result = await touristSpotCollection.find().toArray();
+      res.send(result);
+    });
+
     app.get("/countries", async (req, res) => {
       const result = await countriesCollection.find().toArray();
       res.send(result);
@@ -54,6 +59,13 @@ async function run() {
     app.get("/my-list/:email", async (req, res) => {
       const email = req.params.email;
       const query = { user_email: email };
+      const result = await touristSpotCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.get("/country-list/:name", async (req, res) => {
+      const countryName = req.params.name;
+      const query = { country_Name: countryName };
       const result = await touristSpotCollection.find(query).toArray();
       res.send(result);
     });
