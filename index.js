@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://tourism-management-auth.web.app"],
+    origin: ["http://localhost:5173", "https://tourism-management-auth.web.app", "https://tourism-management-auth.firebaseapp.com"],
   })
 );
 app.use(express.json());
