@@ -6,8 +6,12 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // middleware
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  })
+);
 app.use(express.json());
-app.use(cors());
 
 // mongodb database
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.8bt64xk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -22,7 +26,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
 
     const touristSpotCollection = client.db("touristSpot").collection("spots");
     const countriesCollection = client
@@ -109,7 +113,7 @@ async function run() {
       res.send(result);
     });
 
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
